@@ -1,0 +1,45 @@
+{
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "n",
+    "unicorn",
+    "perfectionist"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "n/no-callback-literal": "error",
+    "n/no-deprecated-api": "warn",
+    "n/no-process-env": "off",
+
+    "unicorn/consistent-function-scoping": "warn",
+    "unicorn/prefer-node-protocol": "error",
+
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc",
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "unknown"
+        ]
+      }
+    ],
+    "perfectionist/sort-named-imports": "error",
+    "perfectionist/sort-named-exports": "error"
+  }
+}
