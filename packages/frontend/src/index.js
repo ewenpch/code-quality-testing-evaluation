@@ -1,8 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
 import _ from 'lodash';
 import moment from 'moment';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+import App from './App';
+
 import 'moment/locale/fr';
 import 'moment/locale/es';
 import 'moment/locale/de';

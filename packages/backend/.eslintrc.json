@@ -17,6 +17,8 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+
     "n/no-callback-literal": "error",
     "n/no-deprecated-api": "warn",
     "n/no-process-env": "off",

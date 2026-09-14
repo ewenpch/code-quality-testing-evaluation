@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', userRoutes);
 app.use('/api', productRoutes);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
