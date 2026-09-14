@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "prettier"
+  ],
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "perfectionist"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+
+    "jsx-a11y/alt-text": "warn",
+
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc",
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "unknown"
+        ]
+      }
+    ],
+    "perfectionist/sort-named-imports": "error",
+    "perfectionist/sort-named-exports": "error"
+  }
+}
