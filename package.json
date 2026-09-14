@@ -1,17 +1,25 @@
 {
-    "name": "code-quality-testing-evaluation",
-    "version": "1.0.0",
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "start": "concurrently \"npm run start --workspace=backend\" \"npm run start --workspace=frontend\"",
-        "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run start --workspace=frontend\"",
-        "test": "npm run test --workspaces --if-present",
-        "lint": "npm run lint --workspaces --if-present"
-    },
-    "devDependencies": {
-        "concurrently": "^8.2.2"
-    }
+  "name": "code-quality-testing-evaluation",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm run start --workspace=backend\" \"npm run start --workspace=frontend\"",
+    "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run start --workspace=frontend\"",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "cross-env CI=true npm run test --workspaces --if-present -- --coverage",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "prettier": "^3.9.6"
+  }
 }

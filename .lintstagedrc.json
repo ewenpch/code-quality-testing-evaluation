@@ -1,0 +1,13 @@
+{
+  "packages/frontend/**/*.{js,jsx}": [
+    "eslint --fix",
+    "prettier --write",
+    "npm run test --workspace=frontend -- --watchAll=false --passWithNoTests --findRelatedTests"
+  ],
+  "packages/backend/**/*.js": [
+    "eslint --fix",
+    "prettier --write",
+    "npm run test --workspace=backend -- --findRelatedTests"
+  ],
+  "*.{json,md,css}": ["prettier --write"]
+}
