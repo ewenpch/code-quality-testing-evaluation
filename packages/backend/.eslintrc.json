@@ -3,15 +3,8 @@
     "node": true,
     "es2022": true
   },
-  "extends": [
-    "eslint:recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "n",
-    "unicorn",
-    "perfectionist"
-  ],
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["n", "unicorn", "perfectionist"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
@@ -31,17 +24,21 @@
       {
         "type": "natural",
         "order": "asc",
-        "groups": [
-          "type",
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index"],
-          "unknown"
-        ]
+        "groups": ["type", "builtin", "external", "internal", ["parent", "sibling", "index"], "unknown"]
       }
     ],
     "perfectionist/sort-named-imports": "error",
     "perfectionist/sort-named-exports": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.js", "jest.config.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "unicorn/consistent-function-scoping": "off"
+      }
+    }
+  ]
 }
