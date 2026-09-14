@@ -9,14 +9,17 @@
     "start": "concurrently \"npm run start --workspace=backend\" \"npm run start --workspace=frontend\"",
     "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run start --workspace=frontend\"",
     "test": "npm run test --workspaces --if-present",
+    "test:coverage": "cross-env CI=true npm run test --workspaces --if-present -- --coverage",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
-    "format:check": "npm run format:check --workspaces --if-present"
+    "format:check": "npm run format:check --workspaces --if-present",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
     "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -25,6 +28,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-unicorn": "^48.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
     "prettier": "^3.9.6"
   }
 }
