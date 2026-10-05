@@ -108,7 +108,7 @@ const AddProduct = () => {
             style={{
               flex: 1,
               padding: '10px',
-              backgroundColor: '#f44336',
+              backgroundColor: '#C62828',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
@@ -123,7 +123,7 @@ const AddProduct = () => {
             style={{
               flex: 1,
               padding: '10px',
-              backgroundColor: '#4CAF50',
+              backgroundColor: '#2E7D32',
               color: 'white',
               border: 'none',
               borderRadius: '4px',

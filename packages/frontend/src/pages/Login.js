@@ -78,7 +78,7 @@ const Login = ({ onLogin }) => {
           type="submit"
           style={{
             padding: '10px',
-            backgroundColor: '#4CAF50',
+            backgroundColor: '#2E7D32',
             color: 'white',
             border: 'none',
             borderRadius: '4px',
