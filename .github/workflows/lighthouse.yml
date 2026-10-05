@@ -28,3 +28,6 @@ jobs:
         with:
           name: lighthouse-reports
           path: .lighthouseci
+          # .lighthouseci is a dot-directory, which upload-artifact skips by default since v4.4
+          include-hidden-files: true
+          if-no-files-found: error
