@@ -118,7 +118,7 @@ const ProductList = () => {
           <button
             style={{
               padding: '10px 20px',
-              backgroundColor: '#4CAF50',
+              backgroundColor: '#2E7D32',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
@@ -217,7 +217,7 @@ const ProductList = () => {
             <p
               style={{
                 margin: '5px 0',
-                color: product.stock > 0 ? '#4CAF50' : '#f44336'
+                color: product.stock > 0 ? '#2E7D32' : '#C62828'
               }}
             >
               Stock: {product.stock}

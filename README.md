@@ -161,7 +161,29 @@ npm run format
 
 # Build project
 npm run build
+
+# Run Lighthouse CI audit
+npm run lighthouse
 ```
+
+## Lighthouse CI
+
+`npm run lighthouse` builds the frontend, serves `packages/frontend/build` with Lighthouse CI's static server and audits the
+public routes (`/login`, `/register`) 3 times each. The command fails if the median score of any category is below its
+threshold:
+
+| Category       | Minimum score |
+| -------------- | ------------- |
+| Performance    | 80            |
+| Accessibility  | 100           |
+| Best Practices | 90            |
+| SEO            | 80            |
+
+- Configuration: [`lighthouserc.js`](lighthouserc.js)
+- HTML/JSON reports are written to `.lighthouseci/reports` (git-ignored)
+- Requires a local Chrome/Chromium installation
+- The [`Lighthouse CI` workflow](.github/workflows/lighthouse.yml) runs the same audit on every push to `main`/`dev` and on
+  pull requests, and uploads the reports as a build artifact
 
 ## Notes
 
