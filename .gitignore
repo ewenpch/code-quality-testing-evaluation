@@ -1,4 +1,6 @@
 node_modules
 coverage
+build
 .DS_Store
 package-lock.json
+.lighthouseci

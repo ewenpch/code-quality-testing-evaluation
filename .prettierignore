@@ -6,3 +6,4 @@ coverage
 .vite
 *.sqlite
 package-lock.json
+.lighthouseci
