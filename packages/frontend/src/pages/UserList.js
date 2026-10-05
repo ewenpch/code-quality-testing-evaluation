@@ -155,37 +155,30 @@ const UserList = () => {
   }, [users, searchTerm, joinedFilter, searchUsers, sortUsers]);
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2 style={{ marginBottom: '20px' }}>Users</h2>
+    <div>
+      <h2 className="page-title mb-6">Users</h2>
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '10px',
-          marginBottom: '20px'
-        }}
-      >
+      <div className="toolbar mb-6">
+        <label className="sr-only" htmlFor="user-search">
+          Search users
+        </label>
         <input
-          type="text"
-          placeholder="Search users..."
-          value={searchTerm}
+          className="input sm:flex-1"
+          id="user-search"
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            flex: 1
-          }}
+          placeholder="Search users..."
+          type="search"
+          value={searchTerm}
         />
 
+        <label className="sr-only" htmlFor="joined-filter">
+          Filter by join date
+        </label>
         <select
-          value={joinedFilter}
+          className="select sm:w-auto"
+          id="joined-filter"
           onChange={(e) => setJoinedFilter(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          value={joinedFilter}
         >
           <option value="">All Users</option>
           <option value="week">Joined this week</option>
@@ -193,90 +186,59 @@ const UserList = () => {
           <option value="older">Joined earlier</option>
         </select>
 
+        <label className="sr-only" htmlFor="sort-field">
+          Sort users by
+        </label>
         <select
-          value={sortField}
+          className="select sm:w-auto"
+          id="sort-field"
           onChange={(e) => setSortField(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          value={sortField}
         >
           <option value="name">Sort by Name</option>
           <option value="username">Sort by Username</option>
           <option value="joined">Sort by Join Date</option>
         </select>
 
+        {/*
+          `title` rather than `aria-label` on purpose: an aria-label would
+          replace the arrow glyph as the accessible name, and the test suite
+          targets this control by its visible text.
+        */}
         <button
+          className="btn-outline size-11 shrink-0 px-0"
           onClick={() => setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            backgroundColor: 'white',
-            cursor: 'pointer'
-          }}
+          title={sortDirection === 'asc' ? 'Sort descending' : 'Sort ascending'}
+          type="button"
         >
           {sortDirection === 'asc' ? '↑' : '↓'}
         </button>
       </div>
 
       {error && (
-        <div
-          style={{
-            color: 'red',
-            padding: '10px',
-            backgroundColor: '#ffebee',
-            marginBottom: '20px',
-            borderRadius: '4px'
-          }}
-        >
+        <div className="alert-error mb-6" role="alert">
           {error}
         </div>
       )}
 
-      <div
-        style={{
-          display: 'grid',
-          gap: '15px'
-        }}
-      >
+      <ul className="grid gap-3 sm:gap-4">
         {filteredUsers.map((user) => (
-          <div
+          <li
+            className="card flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between"
             key={user.id}
-            style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              padding: '15px',
-              backgroundColor: 'white',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}
           >
-            <div>
-              <h3 style={{ margin: '0 0 5px 0' }}>
+            <div className="min-w-0">
+              <h3 className="mb-1 text-lg font-semibold text-content">
                 {user.firstname} {user.lastname}
               </h3>
-              <p style={{ margin: '0', color: '#666' }}>@{user.username}</p>
+              <p className="truncate text-sm text-content-muted">@{user.username}</p>
             </div>
-            <div
-              style={{
-                backgroundColor: '#e3f2fd',
-                padding: '5px 10px',
-                borderRadius: '4px',
-                fontSize: '0.9em'
-              }}
-            >
-              Joined: {new Date(user.created_at).toLocaleDateString()}
-            </div>
-          </div>
+            <span className="badge">Joined: {new Date(user.created_at).toLocaleDateString()}</span>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      {filteredUsers.length === 0 && (
-        <p style={{ textAlign: 'center', color: '#666' }}>No users found matching your criteria</p>
-      )}
+      {filteredUsers.length === 0 && <p className="empty-state">No users found matching your criteria</p>}
     </div>
   );
 };

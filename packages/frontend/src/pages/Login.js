@@ -21,80 +21,54 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: '400px',
-        margin: '0 auto',
-        padding: '20px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-        borderRadius: '8px'
-      }}
-    >
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Login</h2>
+    <div className="card">
+      <h2 className="mb-6 text-center text-2xl font-bold tracking-tight text-content">Login</h2>
+
       {error && (
-        <div
-          style={{
-            color: 'red',
-            marginBottom: '10px',
-            padding: '10px',
-            backgroundColor: '#ffebee',
-            borderRadius: '4px'
-          }}
-        >
+        <div className="alert-error mb-4" role="alert">
           {error}
         </div>
       )}
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '15px'
-        }}
-      >
+
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <label className="sr-only" htmlFor="username">
+          Username
+        </label>
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
+          autoComplete="username"
+          className="input"
+          id="username"
+          name="username"
           onChange={(e) => setUsername(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          placeholder="Username"
+          type="text"
+          value={username}
         />
+
+        <label className="sr-only" htmlFor="password">
+          Password
+        </label>
         <input
-          type="password"
-          placeholder="Password"
-          value={password}
+          autoComplete="current-password"
+          className="input"
+          id="password"
+          name="password"
           onChange={(e) => setPassword(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          placeholder="Password"
+          type="password"
+          value={password}
         />
-        <button
-          type="submit"
-          style={{
-            padding: '10px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
+
+        <button className="btn-primary w-full" type="submit">
           Login
         </button>
       </form>
-      <p
-        style={{
-          textAlign: 'center',
-          marginTop: '20px'
-        }}
-      >
-        Don't have an account? <Link to="/register">Register</Link>
+
+      <p className="mt-6 text-center text-sm text-content-muted">
+        Don't have an account?{' '}
+        <Link className="link" to="/register">
+          Register
+        </Link>
       </p>
     </div>
   );

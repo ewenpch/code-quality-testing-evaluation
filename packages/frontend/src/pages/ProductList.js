@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -104,60 +105,35 @@ const ProductList = () => {
   }, [products, searchTerm, priceFilter, stockFilter]);
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}
-      >
-        <h2>Products</h2>
-        <Link to="/add-product">
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Add Product
-          </button>
+    <div>
+      <div className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="page-title">Products</h2>
+        <Link className="btn-primary w-full sm:w-auto" to="/add-product">
+          Add Product
         </Link>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '10px',
-          marginBottom: '20px'
-        }}
-      >
+      <div className="toolbar mb-6">
+        <label className="sr-only" htmlFor="product-search">
+          Search products
+        </label>
         <input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
+          className="input sm:flex-1"
+          id="product-search"
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            flex: 1
-          }}
+          placeholder="Search products..."
+          type="search"
+          value={searchTerm}
         />
 
+        <label className="sr-only" htmlFor="price-filter">
+          Filter by price
+        </label>
         <select
-          value={priceFilter}
+          className="select sm:w-auto"
+          id="price-filter"
           onChange={(e) => setPriceFilter(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          value={priceFilter}
         >
           <option value="">All Prices</option>
           <option value="low">Low (&lt; $50)</option>
@@ -165,14 +141,14 @@ const ProductList = () => {
           <option value="high">High (&gt; $100)</option>
         </select>
 
+        <label className="sr-only" htmlFor="stock-filter">
+          Filter by stock
+        </label>
         <select
-          value={stockFilter}
+          className="select sm:w-auto"
+          id="stock-filter"
           onChange={(e) => setStockFilter(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          value={stockFilter}
         >
           <option value="">All Stock</option>
           <option value="out">Out of Stock</option>
@@ -182,53 +158,24 @@ const ProductList = () => {
       </div>
 
       {error && (
-        <div
-          style={{
-            color: 'red',
-            padding: '10px',
-            backgroundColor: '#ffebee',
-            marginBottom: '20px',
-            borderRadius: '4px'
-          }}
-        >
+        <div className="alert-error mb-6" role="alert">
           {error}
         </div>
       )}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-          gap: '20px'
-        }}
-      >
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
         {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              padding: '15px',
-              backgroundColor: 'white'
-            }}
-          >
-            <h3 style={{ margin: '0 0 10px 0' }}>{product.name}</h3>
-            <p style={{ margin: '5px 0', color: '#666' }}>Price: ${product.price}</p>
-            <p
-              style={{
-                margin: '5px 0',
-                color: product.stock > 0 ? '#4CAF50' : '#f44336'
-              }}
-            >
+          <li className="card" key={product.id}>
+            <h3 className="mb-2 text-lg font-semibold text-content">{product.name}</h3>
+            <p className="text-sm text-content-muted">Price: ${product.price}</p>
+            <p className={clsx('text-sm font-medium', product.stock > 0 ? 'text-brand' : 'text-danger')}>
               Stock: {product.stock}
             </p>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      {filteredProducts.length === 0 && (
-        <p style={{ textAlign: 'center', color: '#666' }}>No products found matching your criteria</p>
-      )}
+      {filteredProducts.length === 0 && <p className="empty-state">No products found matching your criteria</p>}
     </div>
   );
 };

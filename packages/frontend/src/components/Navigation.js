@@ -2,6 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { logout } from '../services/api';
+import ThemeToggle from './ThemeToggle';
+
+const linkClasses =
+  'rounded text-sm font-medium text-content-inverted underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70';
 
 const Navigation = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -22,64 +26,24 @@ const Navigation = ({ onLogout }) => {
   })();
 
   return (
-    <nav
-      style={{
-        backgroundColor: '#333',
-        padding: '10px',
-        marginBottom: '20px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}
-    >
-      <div>
-        <Link
-          to="/users"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-            marginRight: '20px'
-          }}
-        >
-          Users
-        </Link>
-        <Link
-          to="/products"
-          style={{
-            color: 'white',
-            textDecoration: 'none'
-          }}
-        >
-          Products
-        </Link>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        <span
-          style={{
-            color: 'white',
-            marginRight: '20px'
-          }}
-        >
-          {greeting}
-        </span>
-        <button
-          onClick={handleLogout}
-          style={{
-            backgroundColor: '#f44336',
-            color: 'white',
-            border: 'none',
-            padding: '8px 16px',
-            cursor: 'pointer',
-            borderRadius: '4px'
-          }}
-        >
-          Logout
-        </button>
+    <nav className="bg-surface-inverted text-content-inverted">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="flex items-center gap-4 sm:gap-5">
+          <Link className={linkClasses} to="/users">
+            Users
+          </Link>
+          <Link className={linkClasses} to="/products">
+            Products
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="truncate text-sm sm:text-base">{greeting}</span>
+          <ThemeToggle variant="inverse" />
+          <button className="btn-nav-danger" onClick={handleLogout} type="button">
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
   );

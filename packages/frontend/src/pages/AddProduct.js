@@ -32,104 +32,65 @@ const AddProduct = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: '400px',
-        margin: '0 auto',
-        padding: '20px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-        borderRadius: '8px'
-      }}
-    >
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add New Product</h2>
+    <div className="card">
+      <h2 className="mb-6 text-center text-2xl font-bold tracking-tight text-content">Add New Product</h2>
 
       {error && (
-        <div
-          style={{
-            color: 'red',
-            marginBottom: '10px',
-            padding: '10px',
-            backgroundColor: '#ffebee',
-            borderRadius: '4px'
-          }}
-        >
+        <div className="alert-error mb-4" role="alert">
           {error}
         </div>
       )}
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '15px'
-        }}
-      >
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <label className="sr-only" htmlFor="name">
+          Product Name
+        </label>
         <input
-          type="text"
-          placeholder="Product Name"
-          value={name}
+          className="input"
+          id="name"
+          name="name"
           onChange={(e) => setName(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          placeholder="Product Name"
+          type="text"
+          value={name}
         />
 
+        <label className="sr-only" htmlFor="price">
+          Price
+        </label>
         <input
-          type="number"
-          placeholder="Price"
-          value={price}
+          className="input"
+          id="price"
+          min="0"
+          name="price"
           onChange={(e) => setPrice(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
-        />
-
-        <input
+          placeholder="Price"
+          step="0.01"
           type="number"
-          placeholder="Stock"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd'
-          }}
+          value={price}
         />
 
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            type="button"
-            onClick={() => navigate('/products')}
-            style={{
-              flex: 1,
-              padding: '10px',
-              backgroundColor: '#f44336',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+        <label className="sr-only" htmlFor="stock">
+          Stock
+        </label>
+        <input
+          className="input"
+          id="stock"
+          min="0"
+          name="stock"
+          onChange={(e) => setStock(e.target.value)}
+          placeholder="Stock"
+          step="1"
+          type="number"
+          value={stock}
+        />
+
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button className="btn-danger w-full" onClick={() => navigate('/products')} type="button">
             Cancel
           </button>
 
-          <button
-            type="submit"
-            style={{
-              flex: 1,
-              padding: '10px',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+          <button className="btn-primary w-full" type="submit">
             Add Product
           </button>
         </div>
