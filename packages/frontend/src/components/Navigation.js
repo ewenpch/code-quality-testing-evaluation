@@ -2,6 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { logout } from '../services/api';
+import ThemeToggle from './ThemeToggle';
+
+const linkClasses =
+  'rounded text-sm font-medium text-content-inverted underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70';
 
 const Navigation = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -70,7 +74,7 @@ const Navigation = ({ onLogout }) => {
         <button
           onClick={handleLogout}
           style={{
-            backgroundColor: '#C62828',
+            backgroundColor: '#f44336',
             color: 'white',
             border: 'none',
             padding: '8px 16px',

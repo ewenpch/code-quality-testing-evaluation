@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-
+import './styles/index.css';
 import 'moment/locale/fr';
 import 'moment/locale/es';
 import 'moment/locale/de';

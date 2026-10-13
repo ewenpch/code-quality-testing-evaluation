@@ -1,19 +1,30 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Product Management System</title>
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width" />
 
     <meta name="description" content="A web application" />
 
+    <!--
+      Critical CSS for the pre-hydration splash only. Everything else is served
+      by Tailwind from src/styles/index.css; `color-scheme` and the colour-scheme
+      media query keep this splash readable before the stylesheet loads.
+    -->
     <style>
       body {
         margin: 0;
-        padding: 0;
-        font-family: Arial;
-        background-color: #f5f5f5;
+        font-family: Arial, Helvetica, system-ui, sans-serif;
+        background-color: #f1f5f9;
+        color: #0f172a;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #0f172a;
+          color: #f1f5f9;
+        }
       }
 
       #root {
@@ -26,12 +37,12 @@
         align-items: center;
         height: 100vh;
         width: 100vw;
-        color: #666;
+        color: #64748b;
         font-size: 1.2em;
       }
 
       .error {
-        color: red;
+        color: #b91c1c;
         text-align: center;
         padding: 20px;
       }
@@ -39,16 +50,18 @@
 
     <link rel="manifest" href="/manifest.json" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" />
   </head>
   <body>
-    <noscript> You need JavaScript to run this app. </noscript>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
 
     <div id="root">
       <div class="loading">Loading Application...</div>
     </div>
 
-    <div id="error-container" style="display: none" class="error">An error occurred while loading the application.</div>
+    <div id="error-container" style="display: none" class="error">
+      An error occurred while loading the application.
+    </div>
 
     <script>
       window.onerror = function (msg, url, lineNo, columnNo, error) {

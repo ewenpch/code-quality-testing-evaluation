@@ -1,34 +1,21 @@
 {
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "prettier"
-  ],
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "perfectionist"
-  ],
+  "extends": ["react-app", "react-app/jest", "plugin:tailwindcss/recommended", "prettier"],
+  "plugins": ["react", "jsx-a11y", "perfectionist", "tailwindcss"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-
     "jsx-a11y/alt-text": "warn",
-
+    "tailwindcss/classnames-order": "warn",
+    "tailwindcss/no-custom-classname": "error",
+    "tailwindcss/no-contradicting-classname": "warn",
+    "tailwindcss/no-unregistered-classname": "off",
     "perfectionist/sort-imports": [
       "error",
       {
         "type": "natural",
         "order": "asc",
-        "groups": [
-          "type",
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index"],
-          "unknown"
-        ]
+        "groups": ["type", "builtin", "external", "internal", ["parent", "sibling", "index"], "unknown"]
       }
     ],
     "perfectionist/sort-named-imports": "error",

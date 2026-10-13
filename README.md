@@ -141,6 +141,70 @@ Remember to make Prettier and ESLint work together!
 - [ ] Implement pagination
 - [ ] Add user roles (admin/user)
 
+## Frontend Design System
+
+The frontend is styled with Tailwind CSS v3, configured in `packages/frontend/tailwind.config.js` and processed through
+`packages/frontend/postcss.config.js`. Create React App picks both up automatically, so there is no extra build step.
+
+### Semantic tokens
+
+Raw palette values never appear in component markup. Every colour is a CSS custom property declared on `:root` in
+`packages/frontend/src/styles/index.css` and exposed to Tailwind through the `<alpha-value>` placeholder, so opacity
+modifiers such as `bg-brand/10` keep working on top of the variables.
+
+| Utility                          | Purpose                                                                      |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| `bg-surface`                     | Page background; `surface-raised`, `surface-sunken`, `surface-inverted` too  |
+| `border-border`                  | Default border, `border-strong` for emphasis                                 |
+| `text-content`                   | Body text, `text-content-muted` secondary, `content-inverted` on dark panels |
+| `bg-brand` / `text-brand`        | Primary actions and links, plus `brand-hover`, `brand-subtle`, `brand-on`    |
+| `bg-danger` / `text-danger-text` | Errors and destructive actions                                               |
+| `bg-info-subtle` / `text-info`   | Badges and neutral notices                                                   |
+| `ring-focus`                     | Keyboard focus indicator                                                     |
+| `shadow-card` / `shadow-raised`  | Elevation                                                                    |
+
+Values are stored as bare `R G B` triplets and mirrored under `.dark`, so changing themes is a single variable swap
+rather than a sweep of `dark:` variants across every component.
+
+### Dark mode
+
+- `darkMode: 'class'` in the Tailwind config; the `dark` class lives on `<html>`.
+- `useTheme()` (`src/hooks/useTheme.js`) exposes `{ theme, setTheme, toggleTheme }`; `ThemeToggle` is the UI for it.
+- The preference is stored under the `theme` key in `localStorage`. With no stored value the OS preference from
+  `prefers-color-scheme` wins, and the hook keeps following the OS until the user chooses a theme explicitly.
+- `root.style.colorScheme` is mirrored so native UI such as select menus and scrollbars matches the theme.
+- An inline script in `packages/frontend/public/index.html` applies the stored class before React boots, preventing a
+  flash of the wrong theme.
+- Storage access is wrapped in `try/catch`, so private-browsing modes degrade to a session-only theme.
+
+### Component primitives
+
+Repeated patterns live in the `@layer components` block of `src/styles/index.css` instead of being duplicated as inline
+styles or long utility strings:
+
+`.btn`, `.btn-primary`, `.btn-danger`, `.btn-outline`, `.btn-icon`, `.btn-nav-inverse`, `.btn-nav-danger`, `.card`,
+`.input`, `.select`, `.alert`, `.alert-error`, `.badge`, `.page-title`, `.page-shell`, `.toolbar`, `.empty-state`, `.link`
+
+### Responsive design
+
+Mobile-first: layouts stack by default and collapse into rows from `sm:` (640px) upwards, while `lg:` (1024px) widens
+page gutters and the product grid. Interactive controls carry a `min-h` of 2.75rem (44px) to meet touch-target guidance,
+and the navigation wraps instead of collapsing into a hamburger menu.
+
+### Accessibility
+
+- Brand colours are picked for WCAG AA contrast in both themes: white on green-700 in light, near-black on green-500 in dark.
+- `LoadingSpinner` exposes `role="status"` and is asserted through role-based queries rather than a DOM snapshot.
+- `prefers-reduced-motion: reduce` disables animation and transitions globally.
+- Focus rings use `focus-visible:` with a 2px `focus` ring and a ring offset matching the surrounding surface.
+
+### ESLint integration
+
+`eslint-plugin-tailwindcss` runs with the `recommended` preset plus `no-custom-classname` allowances for the primitives
+above, so class ordering and unknown-utility typos surface in the editor. The plugin resolves `tailwindcss` relative to
+the current working directory, which is why the repository root keeps a `tailwind.config.js` re-exporting the frontend
+config; that duplicate exists so `npm run lint` works from the root as well as from `packages/frontend`.
+
 ## Project Setup
 
 ```bash
