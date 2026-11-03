@@ -168,7 +168,7 @@ const ProductList = () => {
           <li className="card" key={product.id}>
             <h3 className="mb-2 text-lg font-semibold text-content">{product.name}</h3>
             <p className="text-sm text-content-muted">Price: ${product.price}</p>
-            <p className={clsx('text-sm font-medium', product.stock > 0 ? 'text-brand' : 'text-danger')}>
+            <p className={clsx('text-sm font-medium', product.stock > 0 ? 'text-brand' : 'text-danger-text')}>
               Stock: {product.stock}
             </p>
           </li>
