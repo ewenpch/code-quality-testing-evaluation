@@ -58,22 +58,8 @@ const Login = ({ onLogin }) => {
           type="password"
           value={password}
         />
-<<<<<<< HEAD
-        <button
-          type="submit"
-          style={{
-            padding: '10px',
-            backgroundColor: '#2E7D32',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-=======
 
         <button className="btn-primary w-full" type="submit">
->>>>>>> feature/tailwind-design-system
           Login
         </button>
       </form>

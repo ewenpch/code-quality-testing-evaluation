@@ -22,17 +22,7 @@ class ErrorBoundary extends React.Component {
           <pre className="mb-4 whitespace-pre-wrap text-sm text-danger-text">
             {this.state.error && this.state.error.toString()}
           </pre>
-          <button
-            onClick={() => window.location.reload()}
-            style={{
-              padding: '8px 16px',
-              backgroundColor: '#f44336',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+          <button className="btn-danger" onClick={() => window.location.reload()} type="button">
             Reload Page
           </button>
         </div>

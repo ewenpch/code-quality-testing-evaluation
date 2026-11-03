@@ -70,37 +70,6 @@ const AddProduct = () => {
           value={price}
         />
 
-<<<<<<< HEAD
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            type="button"
-            onClick={() => navigate('/products')}
-            style={{
-              flex: 1,
-              padding: '10px',
-              backgroundColor: '#C62828',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            style={{
-              flex: 1,
-              padding: '10px',
-              backgroundColor: '#2E7D32',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-=======
         <label className="sr-only" htmlFor="stock">
           Stock
         </label>
@@ -122,7 +91,6 @@ const AddProduct = () => {
           </button>
 
           <button className="btn-primary w-full" type="submit">
->>>>>>> feature/tailwind-design-system
             Add Product
           </button>
         </div>

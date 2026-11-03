@@ -3,9 +3,36 @@
   <head>
     <meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="description" content="A web application" />
+    <meta name="description" content="Product management system" />
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+
+    <title>Product Management System</title>
+
+    <!--
+      Applies the persisted theme before first paint so the page never flashes
+      the wrong colour scheme. Kept inline and synchronous on purpose: moving it
+      into the bundle would run after React mounts.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('theme');
+          var prefersDark =
+            stored === 'dark' ||
+            (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+          if (prefersDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {
+          /* storage unavailable: fall back to the light theme */
+        }
+      })();
+    </script>
 
     <!--
       Critical CSS for the pre-hydration splash only. Everything else is served
@@ -50,7 +77,7 @@
 
     <link rel="manifest" href="/manifest.json" />
 
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
