@@ -1,86 +1,74 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { loginUser } from '../services/api';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await loginUser(username, password)
-        onLogin();
-      navigate('/products')
+      await loginUser(username, password);
+      onLogin();
+      navigate('/products');
     } catch (err) {
-      setError(err.error || 'An error occurred')
+      setError(err.error || 'An error occurred');
     }
-  }
+  };
 
   return (
-    <div style={{
-      maxWidth: '400px',
-      margin: '0 auto',
-      padding: '20px',
-      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-      borderRadius: '8px',
-    }}>
-      <h2 style={{textAlign: 'center', marginBottom: '20px'}}>Login</h2>
-      {error && <div style={{
-        color: 'red',
-        marginBottom: '10px',
-        padding: '10px',
-        backgroundColor: '#ffebee',
-        borderRadius: '4px',
-      }}>{error}</div>}
-      <form onSubmit={handleSubmit} style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '15px',
-      }}>
+    <div className="card">
+      <h2 className="mb-6 text-center text-2xl font-bold tracking-tight text-content">Login</h2>
+
+      {error && (
+        <div className="alert-error mb-4" role="alert">
+          {error}
+        </div>
+      )}
+
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <label className="sr-only" htmlFor="username">
+          Username
+        </label>
         <input
-          type="text"
+          autoComplete="username"
+          className="input"
+          id="username"
+          name="username"
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          type="text"
           value={username}
-          onChange={e => setUsername(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-          }}
         />
+
+        <label className="sr-only" htmlFor="password">
+          Password
+        </label>
         <input
-          type="password"
+          autoComplete="current-password"
+          className="input"
+          id="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-          }}
         />
-        <button
-          type="submit"
-          style={{
-            padding: '10px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
+
+        <button className="btn-primary w-full" type="submit">
           Login
         </button>
       </form>
-      <p style={{
-        textAlign: 'center',
-        marginTop: '20px',
-      }}>
-        Don't have an account? <Link to="/register">Register</Link>
+
+      <p className="mt-6 text-center text-sm text-content-muted">
+        Don't have an account?{' '}
+        <Link className="link" to="/register">
+          Register
+        </Link>
       </p>
     </div>
   );

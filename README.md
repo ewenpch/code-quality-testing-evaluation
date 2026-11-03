@@ -1,11 +1,13 @@
 # Code Quality & Testing Evaluation Project
 
 ## Context
+
 You are working for a company that has recently acquired a small e-commerce project. The codebase is functional but lacks proper code quality standards, testing, and modern development practices. Your task is to improve the codebase by implementing various tools and best practices.
 
 ## Git Requirements (Mandatory)
 
 ### 1. Branch Strategy
+
 - Main branch is protected and cannot be pushed to directly
 - Must create the following branches:
   - `feature/eslint-prettier-setup`
@@ -17,7 +19,9 @@ You are working for a company that has recently acquired a small e-commerce proj
 - Each feature/fix must have its own branch
 
 ### 2. Commit Message Convention
+
 Must follow the Conventional Commits specification:
+
 ```
 <type>[optional scope]: <description>
 
@@ -27,6 +31,7 @@ Must follow the Conventional Commits specification:
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `chore`: Changes to build process or auxiliary tools
@@ -38,6 +43,7 @@ Types:
 - `ci`: Changes to CI configuration files and scripts
 
 Examples:
+
 ```
 feat(frontend): add user authentication component
 fix(backend): resolve CORS issue with products API
@@ -48,6 +54,7 @@ chore: update eslint configuration
 ## Main Requirements
 
 ### 1. Code Quality Tools Implementation
+
 - [ ] Install and configure Prettier with the following requirements:
   - Single quotes
   - No trailing commas
@@ -67,6 +74,7 @@ chore: update eslint configuration
 Remember to make Prettier and ESLint work together!
 
 ### 2. Git Hooks Setup
+
 - [ ] Install and configure Husky
 - [ ] Configure lint-staged
 - [ ] Implement pre-commit hooks:
@@ -78,6 +86,7 @@ Remember to make Prettier and ESLint work together!
   - Check test coverage thresholds
 
 ### 3. Testing Implementation
+
 - [ ] Configure Jest for both packages
 - [ ] Implement test coverage reporting with minimum thresholds:
   - Statements: 80%
@@ -96,6 +105,7 @@ Remember to make Prettier and ESLint work together!
   - Authentication middleware tests
 
 ### 4. Performance Analysis
+
 - [ ] Implement Google Lighthouse CI
 - [ ] Create npm script for running Lighthouse
 - [ ] Set minimum score thresholds:
@@ -107,6 +117,7 @@ Remember to make Prettier and ESLint work together!
 ## Bonus Points
 
 ### 1. Styling Enhancement
+
 - [ ] Implement Tailwind CSS
 - [ ] Add ESLint plugin for Tailwind
 - [ ] Create a proper color scheme and design system
@@ -114,6 +125,7 @@ Remember to make Prettier and ESLint work together!
 - [ ] Add dark mode support
 
 ### 2. Code Quality Enhancements
+
 - [ ] Implement TypeScript
 - [ ] Add ESLint plugins for TypeScript
 - [ ] Add proper error boundaries in React
@@ -122,13 +134,79 @@ Remember to make Prettier and ESLint work together!
 - [ ] Implement proper environment variable handling
 
 ### 3. Additional Features
+
 - [ ] Add product categories
 - [ ] Implement product search
 - [ ] Add product sorting and filtering
 - [ ] Implement pagination
 - [ ] Add user roles (admin/user)
 
+## Frontend Design System
+
+The frontend is styled with Tailwind CSS v3, configured in `packages/frontend/tailwind.config.js` and processed through
+`packages/frontend/postcss.config.js`. Create React App picks both up automatically, so there is no extra build step.
+
+### Semantic tokens
+
+Raw palette values never appear in component markup. Every colour is a CSS custom property declared on `:root` in
+`packages/frontend/src/styles/index.css` and exposed to Tailwind through the `<alpha-value>` placeholder, so opacity
+modifiers such as `bg-brand/10` keep working on top of the variables.
+
+| Utility                          | Purpose                                                                      |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| `bg-surface`                     | Page background; `surface-raised`, `surface-sunken`, `surface-inverted` too  |
+| `border-border`                  | Default border, `border-strong` for emphasis                                 |
+| `text-content`                   | Body text, `text-content-muted` secondary, `content-inverted` on dark panels |
+| `bg-brand` / `text-brand`        | Primary actions and links, plus `brand-hover`, `brand-subtle`, `brand-on`    |
+| `bg-danger` / `text-danger-text` | Errors and destructive actions                                               |
+| `bg-info-subtle` / `text-info`   | Badges and neutral notices                                                   |
+| `ring-focus`                     | Keyboard focus indicator                                                     |
+| `shadow-card` / `shadow-raised`  | Elevation                                                                    |
+
+Values are stored as bare `R G B` triplets and mirrored under `.dark`, so changing themes is a single variable swap
+rather than a sweep of `dark:` variants across every component.
+
+### Dark mode
+
+- `darkMode: 'class'` in the Tailwind config; the `dark` class lives on `<html>`.
+- `useTheme()` (`src/hooks/useTheme.js`) exposes `{ theme, setTheme, toggleTheme }`; `ThemeToggle` is the UI for it.
+- The preference is stored under the `theme` key in `localStorage`. With no stored value the OS preference from
+  `prefers-color-scheme` wins, and the hook keeps following the OS until the user chooses a theme explicitly.
+- `root.style.colorScheme` is mirrored so native UI such as select menus and scrollbars matches the theme.
+- An inline script in `packages/frontend/public/index.html` applies the stored class before React boots, preventing a
+  flash of the wrong theme.
+- Storage access is wrapped in `try/catch`, so private-browsing modes degrade to a session-only theme.
+
+### Component primitives
+
+Repeated patterns live in the `@layer components` block of `src/styles/index.css` instead of being duplicated as inline
+styles or long utility strings:
+
+`.btn`, `.btn-primary`, `.btn-danger`, `.btn-outline`, `.btn-icon`, `.btn-nav-inverse`, `.btn-nav-danger`, `.card`,
+`.input`, `.select`, `.alert`, `.alert-error`, `.badge`, `.page-title`, `.page-shell`, `.toolbar`, `.empty-state`, `.link`
+
+### Responsive design
+
+Mobile-first: layouts stack by default and collapse into rows from `sm:` (640px) upwards, while `lg:` (1024px) widens
+page gutters and the product grid. Interactive controls carry a `min-h` of 2.75rem (44px) to meet touch-target guidance,
+and the navigation wraps instead of collapsing into a hamburger menu.
+
+### Accessibility
+
+- Brand colours are picked for WCAG AA contrast in both themes: white on green-700 in light, near-black on green-500 in dark.
+- `LoadingSpinner` exposes `role="status"` and is asserted through role-based queries rather than a DOM snapshot.
+- `prefers-reduced-motion: reduce` disables animation and transitions globally.
+- Focus rings use `focus-visible:` with a 2px `focus` ring and a ring offset matching the surrounding surface.
+
+### ESLint integration
+
+`eslint-plugin-tailwindcss` runs with the `recommended` preset plus `no-custom-classname` allowances for the primitives
+above, so class ordering and unknown-utility typos surface in the editor. The plugin resolves `tailwindcss` relative to
+the current working directory, which is why the repository root keeps a `tailwind.config.js` re-exporting the frontend
+config; that duplicate exists so `npm run lint` works from the root as well as from `packages/frontend`.
+
 ## Project Setup
+
 ```bash
 # Install dependencies
 npm install
@@ -147,9 +225,32 @@ npm run format
 
 # Build project
 npm run build
+
+# Run Lighthouse CI audit
+npm run lighthouse
 ```
 
+## Lighthouse CI
+
+`npm run lighthouse` builds the frontend, serves `packages/frontend/build` with Lighthouse CI's static server and audits the
+public routes (`/login`, `/register`) 3 times each. The command fails if the median score of any category is below its
+threshold:
+
+| Category       | Minimum score |
+| -------------- | ------------- |
+| Performance    | 80            |
+| Accessibility  | 100           |
+| Best Practices | 90            |
+| SEO            | 80            |
+
+- Configuration: [`lighthouserc.js`](lighthouserc.js)
+- HTML/JSON reports are written to `.lighthouseci/reports` (git-ignored)
+- Requires a local Chrome/Chromium installation
+- The [`Lighthouse CI` workflow](.github/workflows/lighthouse.yml) runs the same audit on every push to `main`/`dev` and on
+  pull requests, and uploads the reports as a build artifact
+
 ## Notes
+
 - Code must follow community standards
 - All tools must be properly configured with appropriate documentation
 - Extra attention will be paid to:
@@ -161,6 +262,7 @@ npm run build
   - Security practices
 
 ## Resources
+
 - [ESLint Documentation](https://eslint.org/)
 - [Prettier Documentation](https://prettier.io/)
 - [Jest Documentation](https://jestjs.io/)
