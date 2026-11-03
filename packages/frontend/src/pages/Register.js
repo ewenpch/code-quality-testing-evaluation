@@ -80,19 +80,6 @@ const Register = () => {
           type="text"
           value={formData.username}
         />
-<<<<<<< HEAD
-        <button
-          type="submit"
-          style={{
-            padding: '10px',
-            backgroundColor: '#2E7D32',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-=======
 
         <label className="sr-only" htmlFor="password">
           Password
@@ -109,7 +96,6 @@ const Register = () => {
         />
 
         <button className="btn-primary w-full" type="submit">
->>>>>>> feature/tailwind-design-system
           Register
         </button>
       </form>

@@ -105,37 +105,11 @@ const ProductList = () => {
   }, [products, searchTerm, priceFilter, stockFilter]);
 
   return (
-<<<<<<< HEAD
-    <div style={{ padding: '20px' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}
-      >
-        <h2>Products</h2>
-        <Link to="/add-product">
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#2E7D32',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Add Product
-          </button>
-=======
     <div>
       <div className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="page-title">Products</h2>
         <Link className="btn-primary w-full sm:w-auto" to="/add-product">
           Add Product
->>>>>>> feature/tailwind-design-system
         </Link>
       </div>
 
@@ -191,30 +165,10 @@ const ProductList = () => {
 
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
         {filteredProducts.map((product) => (
-<<<<<<< HEAD
-          <div
-            key={product.id}
-            style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              padding: '15px',
-              backgroundColor: 'white'
-            }}
-          >
-            <h3 style={{ margin: '0 0 10px 0' }}>{product.name}</h3>
-            <p style={{ margin: '5px 0', color: '#666' }}>Price: ${product.price}</p>
-            <p
-              style={{
-                margin: '5px 0',
-                color: product.stock > 0 ? '#2E7D32' : '#C62828'
-              }}
-            >
-=======
           <li className="card" key={product.id}>
             <h3 className="mb-2 text-lg font-semibold text-content">{product.name}</h3>
             <p className="text-sm text-content-muted">Price: ${product.price}</p>
-            <p className={clsx('text-sm font-medium', product.stock > 0 ? 'text-brand' : 'text-danger')}>
->>>>>>> feature/tailwind-design-system
+            <p className={clsx('text-sm font-medium', product.stock > 0 ? 'text-brand' : 'text-danger-text')}>
               Stock: {product.stock}
             </p>
           </li>
